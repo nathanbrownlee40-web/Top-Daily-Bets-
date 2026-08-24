@@ -1,16 +1,14 @@
-# Top Daily Bets + Tracker
+# Top Daily Bets — Normal Bet Tracker
 
-A standalone normal-football-bet tracker using the same visual style and core logic as the Top Daily Builders app.
+Latest update:
+- Best performing League / Market / Bookmaker / Selection now use horizontal win-rate bars with percentages.
+- Up to 5 entries per category are shown, ranked by profit then win rate.
+- Added Delete Bet controls to every bet card.
+- Delete asks for confirmation and permanently removes the bet from this device.
+- The seeded example open bet can also be deleted and will not come back after refresh.
+- Service-worker cache bumped to v3 so GitHub Pages/Netlify picks up the new build.
 
-## Included
-- Dashboard with six compact KPI boxes
-- Live & Upcoming open bets
-- Bet Results
-- Bet Stats with cumulative profit/loss graph
-- Add normal single bets with team/event, market, selection, odds and stake
-- Automatic win/loss/profit calculations
-- Win/Loss KPI colour changes based on which side is higher
-- LocalStorage persistence
-- PWA install support
+## GitHub Pages / Netlify
+Upload/replace all files in this folder, keeping the filenames unchanged.
 
-Upload all files in this folder to a GitHub Pages repository.
+Data is stored locally in the browser with localStorage, so replacing the website files does not itself erase the device's saved bets.
