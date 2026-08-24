@@ -12,3 +12,6 @@ Latest update:
 Upload/replace all files in this folder, keeping the filenames unchanged.
 
 Data is stored locally in the browser with localStorage, so replacing the website files does not itself erase the device's saved bets.
+
+
+Latest update: the Profit / Loss tracker now has tappable points showing date, individual profit, stake, odds and cumulative profit. Top stat cards have also been refined for a cleaner mobile look.
