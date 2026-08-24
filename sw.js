@@ -1,5 +1,57 @@
-const CACHE='top-daily-bets-v7-won-lost';
-const ASSETS=['./','./index.html','./manifest.json','./icon-192x192.png','./icon-512x512.png'];
-self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).then(()=>self.skipWaiting())));
-self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
-self.addEventListener('fetch',e=>e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request))));
+const CACHE = "top-daily-builders-v19-light-stats";
+
+// Keep the service worker deliberately small and resilient. Missing optional
+// icons must never prevent a new deployment from activating.
+const APP_SHELL = ["./", "./index.html", "./manifest.json"];
+
+self.addEventListener("install", event => {
+  event.waitUntil(
+    caches.open(CACHE)
+      .then(cache => Promise.all(APP_SHELL.map(url =>
+        fetch(url, {cache: "no-store"}).then(r => r.ok ? cache.put(url, r) : null).catch(() => null)
+      )))
+      .then(() => self.skipWaiting())
+  );
+});
+
+self.addEventListener("activate", event => {
+  event.waitUntil(
+    caches.keys()
+      .then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k))))
+      .then(() => self.clients.claim())
+  );
+});
+
+self.addEventListener("fetch", event => {
+  if (event.request.method !== "GET") return;
+  const url = new URL(event.request.url);
+  const isDocument = event.request.mode === "navigate" ||
+    url.pathname.endsWith("/index.html") ||
+    url.pathname.endsWith("/sw.js") ||
+    url.pathname.endsWith("/manifest.json");
+
+  if (isDocument) {
+    event.respondWith(
+      fetch(event.request, {cache: "no-store"})
+        .then(response => {
+          if (response.ok && (event.request.mode === "navigate" || url.pathname.endsWith("/index.html"))) {
+            const copy = response.clone();
+            caches.open(CACHE).then(cache => cache.put("./index.html", copy)).catch(() => {});
+          }
+          return response;
+        })
+        .catch(() => caches.match("./index.html").then(cached => cached || new Response("Offline", {status: 503})))
+    );
+    return;
+  }
+
+  event.respondWith(
+    caches.match(event.request).then(cached => cached || fetch(event.request).then(response => {
+      if (response.ok) {
+        const copy = response.clone();
+        caches.open(CACHE).then(cache => cache.put(event.request, copy)).catch(() => {});
+      }
+      return response;
+    }))
+  );
+});
