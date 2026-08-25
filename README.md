@@ -1,17 +1,19 @@
-# Top Daily Bets — Normal Bet Tracker
+# Top Daily Bets — AI Analyst v27
 
-Latest update:
-- Best performing League / Market / Bookmaker / Selection now use horizontal win-rate bars with percentages.
-- Up to 5 entries per category are shown, ranked by profit then win rate.
-- Added Delete Bet controls to every bet card.
-- Delete asks for confirmation and permanently removes the bet from this device.
-- The seeded example open bet can also be deleted and will not come back after refresh.
-- Service-worker cache bumped to v3 so GitHub Pages/Netlify picks up the new build.
+This is the secure version of Top Daily Bets with the AI Analyst server function included.
 
-## GitHub Pages / Netlify
-Upload/replace all files in this folder, keeping the filenames unchanged.
+## Why you saw “Failed to fetch”
 
-Data is stored locally in the browser with localStorage, so replacing the website files does not itself erase the device's saved bets.
+The app was being opened as a downloaded `content://` HTML file. That file can display the app, but it cannot provide the `/api/analyse` server function itself. The API key must stay on a server, so the AI feature cannot work from a standalone downloaded HTML file.
 
+## Deploy this exact folder
 
-Latest update: the Profit / Loss tracker now has tappable points showing date, individual profit, stake, odds and cumulative profit. Top stat cards have also been refined for a cleaner mobile look.
+1. Upload/import this whole folder into Vercel.
+2. In Vercel → Project Settings → Environment Variables, add:
+   `OPENAI_API_KEY` = your OpenAI API key.
+3. Redeploy.
+4. Open the Vercel URL on your phone and use AI Analyst.
+
+Do not put the API key into `index.html` or the browser.
+
+The frontend calls `/api/analyse`, and the included server function calls the OpenAI Responses API with web search. The API key remains server-side.

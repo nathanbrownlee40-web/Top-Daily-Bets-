@@ -1,0 +1,8 @@
+{
+  "name": "top-daily-bets-ai-analyst",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "openai": "latest"
+  }
+}
