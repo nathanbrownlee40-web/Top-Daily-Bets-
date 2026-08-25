@@ -1,19 +1,9 @@
-TOP DAILY BETS — MARKET-ONLY UPDATE
+Top Daily Bets — Multiples update
 
-Files to replace in the existing app/repository:
-- index.html
-- sw.js
-- manifest.json (same app manifest, included for completeness)
+Manual Add Bet now supports:
+- Single
+- Double
+- Treble
+- 4-Fold
 
-Changes:
-- Removed the separate Selection input from New Bet.
-- Market is now the single field used for the bet pick, e.g. "Over 2.5 Goals", "BTTS", "Corners", "Match Result".
-- New bets save the market as the displayed bet market and keep a compatibility copy in the old selection field so existing data is not broken.
-- Existing bets are migrated on load if they have a selection but no market.
-- Betting cards now show MARKET + the market text, with no separate selection value.
-- Best-performing Market bars now group strictly by the Market field, not team names or selection values.
-- Search placeholder is now "Search team, market".
-- Graph point details show the date/time, market, stake, odds, and Total P/L after bet.
-- Service-worker cache was bumped to v5 so phones pick up this build.
-
-Keep the existing icon files in the repository.
+For Double/Treble/4-Fold, each leg has its own event, market, selection and odds. Combined odds and potential return are calculated automatically. Multiple bets are saved as one bet with all selections retained on the card.
