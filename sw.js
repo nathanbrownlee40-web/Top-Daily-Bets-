@@ -1,4 +1,4 @@
-const CACHE = "top-daily-builders-v13-multiples";
+const CACHE = "top-daily-builders-v14-multiples";
 
 // Keep the service worker deliberately small and resilient. Missing optional
 // icons must never prevent a new deployment from activating.
